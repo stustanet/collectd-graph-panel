@@ -12,6 +12,8 @@ class Type_GenericIO extends Type_Default {
 		$raw = null;
 		if ($this->scale)
 			$raw = '_raw';
+		else
+                        $raw = ''; // by jj
 		$i=0;
 		foreach ($this->tinstances as $tinstance) {
 			foreach ($this->data_sources as $ds) {

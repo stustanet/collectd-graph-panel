@@ -8,7 +8,7 @@ $width = empty($_GET['x']) ? $CONFIG['width'] : $_GET['x'];
 $heigth = empty($_GET['y']) ? $CONFIG['heigth'] : $_GET['y'];
 
 if (validate_get(GET('h'), 'host') === NULL) {
-	error_log('CGP Error: plugin contains unknown characters');
+	error_log('CGP Error: plugin contains unknown characters, GET host is wrong.');
 	error_image();
 }
 

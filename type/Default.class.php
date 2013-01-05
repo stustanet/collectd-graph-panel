@@ -71,7 +71,7 @@ class Type_Default {
 	}
 
 	function validate_color($color) {
-		if (!preg_match('/^[0-9a-f]{6}$/', $color))
+		if (!preg_match("/^[0-9a-f]{6}$/", $color))
 			return '000000';
 		else
 			return $color;
@@ -277,7 +277,23 @@ class Type_Default {
 		if(count($this->files)<=1) {
 			$c = 0;
 			foreach ($sources as $source) {
-				$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
+				//$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
+			 
+				if(is_array($this->colors)) {
+					if(isset($this->colors[$source])){
+						$color = $this->colors[$source];
+					} else {
+						if(isset($this->colors[$c])) {
+							$color = $this->colors[$c++];
+						} else {
+							//print_r($this->color);
+							$color = $this->colors["value"];
+						}
+					}
+				}	
+				else {
+					$color = $this->colors;
+				}
 				$rrdgraph[] = sprintf('AREA:max_%s#%s', crc32hex($source), $this->get_faded_color($color));
 				$rrdgraph[] = sprintf('AREA:min_%s#%s', crc32hex($source), 'ffffff');
 				break; # only 1 area to draw
@@ -286,8 +302,24 @@ class Type_Default {
 
 		$c = 0;
 		foreach ($sources as $source) {
-			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
-			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]): $this->colors;
+			$dsname = $this->rrd_escape($this->ds_names[$source]) != '' ? $this->rrd_escape($this->ds_names[$source]) : $this->rrd_escape($source);
+			//print_r($this->colors);
+			 
+			if(is_array($this->colors)) {
+				if(isset($this->colors[$source])){
+					$color = $this->colors[$source];
+				} else {
+					if(isset($this->colors[$c])) {
+						$color = $this->colors[$c++];
+					} else {
+						$color = $this->colors["value"];
+					}
+				}
+			}	
+			else {
+				$color = $this->colors;
+			}
+			//print_r($color);
 			$rrdgraph[] = sprintf('LINE1:avg_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);

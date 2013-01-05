@@ -42,7 +42,37 @@ class Type_GenericStacked extends Type_Default {
 
 		$c = 0;
 		foreach ($sources as $source) {
-			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
+			//jjstart
+			if(is_array($this->colors)) {
+                               if(isset($this->colors[$source])) {
+                                       $color = $this->colors[$source];
+                               } else {
+                                       if(isset($this->colors[$c])) {
+                                               $color = $this->colors[$c++];
+                                       } else {
+						//fallback color:
+						$color = '';
+						foreach( array(4,2,0) as $j) {
+							$color .= sprintf('%02x', 100);
+						}
+					}
+                               }
+                       } else {
+                               $color = $this->color;
+                       }
+			/*
+			if(is_array($this->colors)) {
+				if(isset($this->colors[$source])) {
+					$color = $this->colors[$source];
+				} else {
+					$color = $this->colors[$c++];
+				}
+			} else {
+				 $color = $this->colors;
+			}*/
+			//jjend
+			//orig:
+			//$color = is_array($this->colors) ? ( isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++] ) : $this->colors;
 			$color = $this->get_faded_color($color);
 			$rrdgraph[] = sprintf('AREA:area_%s#%s', crc32hex($source), $color);
 		}
@@ -50,7 +80,25 @@ class Type_GenericStacked extends Type_Default {
 		$c = 0;
 		foreach ($sources as $source) {
 			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
-			$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
+                        
+			if(is_array($this->colors)) {
+                               if(isset($this->colors[$source])) {
+                                       $color = $this->colors[$source];
+                               } else {
+                                       if(isset($this->colors[$c])) {
+                                               $color = $this->colors[$c++];
+                                       } else {
+                                                //fallback color:
+                                                $color = '';
+                                                foreach( array(4,2,0) as $j) {
+                                                        $color .= sprintf('%02x', 100);
+                                                }
+                                        }
+                               }
+                       	} else {
+                               $color = $this->color;
+                       	}
+			//$color = is_array($this->colors) ? (isset($this->colors[$source])?$this->colors[$source]:$this->colors[$c++]) : $this->colors;
 			$rrdgraph[] = sprintf('LINE1:area_%s#%s:\'%s\'', crc32hex($source), $this->validate_color($color), $this->rrd_escape($dsname));
 			$rrdgraph[] = sprintf('GPRINT:min_%s:MIN:\'%s Min,\'', crc32hex($source), $this->rrd_format);
 			$rrdgraph[] = sprintf('GPRINT:avg_%s:AVERAGE:\'%s Avg,\'', crc32hex($source), $this->rrd_format);
