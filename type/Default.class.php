@@ -302,7 +302,7 @@ class Type_Default {
 
 		$c = 0;
 		foreach ($sources as $source) {
-			$dsname = $this->rrd_escape($this->ds_names[$source]) != '' ? $this->rrd_escape($this->ds_names[$source]) : $this->rrd_escape($source);
+			$dsname = $this->ds_names[$source] != '' ? $this->ds_names[$source] : $source;
 			//print_r($this->colors);
 			 
 			if(is_array($this->colors)) {
