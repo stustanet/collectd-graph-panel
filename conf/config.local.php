@@ -1,3 +1,4 @@
+<?php
 # StuStaNet configuration
 
 # collectd version
@@ -16,6 +17,7 @@ $CONFIG['cat']['hardware servers'] = array(
 		'appaloosa.stusta.mhn.de',
 		'mailhub.stusta.mhn.de',
 		'mammut.stusta.mhn.de',
+		'muli.stusta.mhn.de',
 		'mustang.stusta.mhn.de',
 		'tapir.stusta.mhn.de',
 		'temperator.stusta.mhn.de',
@@ -55,3 +57,4 @@ $CONFIG['overview'] = array('cpu', 'ping','tail',);
 # browser cache time for the graphs (in seconds)
 $CONFIG['cache'] = 150;
 
+?>
