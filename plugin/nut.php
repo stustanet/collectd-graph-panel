@@ -30,11 +30,11 @@ switch($obj->args['type']) {
 		$obj->ds_names = array('value' => 'Temperature');
 		$obj->rrd_title = sprintf('Temperature (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = '°C';
-		$obj->rrd_format = '%5.1lf%s';
+		$obj->rrd_format = '%5.1lf';
 	break;
 	case 'timeleft':
 		$obj->data_sources = array('value');
-		$obj->ds_names = array('timeleft' => 'Timeleft');
+		$obj->ds_names = array('battery' => 'Timeleft');
 		$obj->rrd_title = sprintf('Timeleft (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Seconds';
 		$obj->rrd_format = '%5.1lf';
