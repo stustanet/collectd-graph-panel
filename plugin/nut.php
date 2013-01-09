@@ -18,7 +18,7 @@ $obj->width = $width;
 $obj->heigth = $heigth;
 switch($obj->args['type']) {
 	case 'percent':
-		$obj->data_sources = array('percent');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array('charge' => 'Charge',
 		                       'load' => 'Load');
 		$obj->rrd_title = sprintf('Charge & load (%s)', $obj->args['pinstance']);
@@ -33,7 +33,7 @@ switch($obj->args['type']) {
 		$obj->rrd_format = '%5.1lf%s';
 	break;
 	case 'timeleft':
-		$obj->data_sources = array('timeleft');
+		$obj->data_sources = array('value');
 		$obj->ds_names = array('timeleft' => 'Timeleft');
 		$obj->rrd_title = sprintf('Timeleft (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Seconds';
@@ -46,6 +46,21 @@ switch($obj->args['type']) {
 		                       'output' => 'Output');
 		$obj->rrd_title = sprintf('Voltage (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Volts';
+		$obj->rrd_format = '%5.1lf';
+	break;
+	case 'current':
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('output' => 'Output');
+		$obj->rrd_title = sprintf('Ampere (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'Ampere';
+		$obj->rrd_format = '%5.1lf';
+	break;
+	case 'frequency':
+		$obj->data_sources = array('value');
+		$obj->ds_names = array('input' => 'Input',
+		                       'output' => 'Output');
+		$obj->rrd_title = sprintf('Frequency (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'Frequency';
 		$obj->rrd_format = '%5.1lf';
 	break;
 }
