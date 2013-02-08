@@ -68,6 +68,8 @@ class Type_Default {
 			'tinstance' => GET('ti'),
 		);
 		$this->seconds = GET('s');
+		$this->ulimit = GET('lu');
+		$this->llimit = GET('ll');
 	}
 
 	function validate_color($color) {
@@ -186,6 +188,18 @@ class Type_Default {
 		$rrdgraph[] = sprintf('-t "%s on %s"', $this->rrd_title, $this->args['host']);
 		$rrdgraph[] = sprintf('-v "%s"', $this->rrd_vertical);
 		$rrdgraph[] = sprintf('-s -%d', is_numeric($this->seconds) ? $this->seconds : 86400);
+		$rigid = 0;
+		if (is_numeric($this->ulimit)) {
+			$rrdgraph[] = sprintf('-u %F', $this->ulimit);
+			$rigid = 1;
+		}
+		if (is_numeric($this->llimit)) {
+			$rrdgraph[] = sprintf('-l %F', $this->llimit);
+			$rigid = 1;
+		}
+		if ($rigid) {
+			$rrdgraph[] = '-r';
+		}
 
 		return $rrdgraph;
 	}
