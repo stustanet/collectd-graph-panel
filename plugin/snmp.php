@@ -59,7 +59,7 @@ switch ($obj->args['type']) {
 		$obj->ds_names = array(
 			'cacheCurrentFileDescrCnt' => 'Number of file descriptors in use',
 		);
-#		$obj->rrd_vertical = '';
+		$obj->rrd_vertical = '#';
 		$obj->rrd_title = 'Squid File Desriptors';
 		break;
 	case 'cache_ratio':
@@ -78,7 +78,7 @@ switch ($obj->args['type']) {
 			'cacheHttpHits' => 'Number of HTTP Hits',
 			'cacheHttpErrors' => 'Number of HTTP Errors',
 		);
-#		$obj->rrd_vertical = '';
+		$obj->rrd_vertical = 'requests/second';
 		$obj->rrd_title = 'Squid HTTP Requests';
 		break;
 }
