@@ -1,0 +1,1 @@
+Hier wird die CGP Version, die vom StuStaNet verwendet wird gehosted. Unsere Änderungem zum Upstream sind im stustanet Branch.
